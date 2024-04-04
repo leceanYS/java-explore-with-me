@@ -24,12 +24,11 @@ public class StatServiceImpl  implements StatService {
     @Transactional
     @Override
     public Stat postStat(Stat stat) {
-        boolean answer = serviceRepository.existsByUri(stat.getUri()); //проверяю есть ли уже записть с данным запросом uri
+        boolean answer = serviceRepository.existsByUri(stat.getUri());
         Stat newStat;
-        if (answer) { //если есть
-            boolean answerIp = serviceRepository.existsByUriAndIp(stat.getUri(), stat.getIp()); //проверяю были ли обращения
-                                                                                                //с этого ip
-            if (answerIp) { //если были то обновляю только обший hit
+        if (answer) {
+            boolean answerIp = serviceRepository.existsByUriAndIp(stat.getUri(), stat.getIp());
+            if (answerIp) {
                 newStat = serviceRepository.findByUri(stat.getUri());
                 long hit = newStat.getHits();
                 newStat.setHits(hit + 1);
@@ -44,8 +43,8 @@ public class StatServiceImpl  implements StatService {
                 log.info("update stat parameter hits unique");
             }
         } else { //если нет
-            stat.setHits(1); //добавляю запись о общем посещении
-            stat.setHitsUnique(1); //добавляю запись о уникальном посещении
+            stat.setHits(1);
+            stat.setHitsUnique(1);
             newStat = serviceRepository.save(stat);
             log.info("create new stat");
         }
@@ -59,19 +58,19 @@ public class StatServiceImpl  implements StatService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
         LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
-            if (uris.isEmpty()) { //если список uri пуст
-                if (unique) { //если надо учитывать уникальность
+            if (uris.isEmpty()) {
+                if (unique) {
                     list = StatMapper.toListUnique(serviceRepository.findByTimestampBetween(dateStart, dateEnd));
                     log.info("get unique list without uris");
-                } else { //если не надо учитывать уникальность
+                } else {
                     list = StatMapper.toListNotUnique(serviceRepository.findByTimestampBetween(dateStart, dateEnd));
                     log.info("get not unique list without uris");
                 }
-            } else { //если список uri не пуст
-                if (unique) { //если надо учитывать уникальность
+            } else {
+                if (unique) {
                     list = StatMapper.toListUnique(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris));
                     log.info("get unique list with uris");
-                } else { //если не надо учитывать уникальность
+                } else {
                     list = StatMapper.toListNotUnique(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris));
                     log.info("get not unique list with uris");
                 }
