@@ -13,6 +13,8 @@ import ru.practicum.model.StatUniqueOrNot;
 import ru.practicum.service.StatService;
 
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -30,11 +32,13 @@ public class StatServiceController {
         return StatMapper.toStatDto(statEvent);
     }
 
-    @GetMapping("/stats")
     public List<StatUniqueOrNotDto> getStatEvent(@RequestParam("start") @Min(19) String start, @RequestParam("end") @Min(19) String end,
                                                  @RequestParam(defaultValue = "") List<String> uris,
                                                  @RequestParam(defaultValue = "false") boolean unique) {
-        List<StatUniqueOrNot> stats =  statService.getStat(start, end, uris, unique);
+        LocalDateTime startDate = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime endDate = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        List<StatUniqueOrNot> stats = statService.getStat(startDate, endDate, uris, unique);
         log.info("get list stat size ={}", stats.size());
         return StatMapper.toListStatDtoFromStatUnique(stats);
     }
