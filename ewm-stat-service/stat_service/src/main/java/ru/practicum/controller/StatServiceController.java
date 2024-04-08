@@ -32,7 +32,8 @@ public class StatServiceController {
         return StatMapper.toStatDto(statEvent);
     }
 
-    public List<StatUniqueOrNotDto> getStatEvent(@RequestParam("start") @Min(19) String start, @RequestParam("end") @Min(19) String end,
+    @GetMapping("/stats")
+    public List<StatUniqueOrNotDto> getStatEvent(@PathVariable("start") @Min(19) String start, @PathVariable("end") @Min(19) String end,
                                                  @RequestParam(defaultValue = "") List<String> uris,
                                                  @RequestParam(defaultValue = "false") boolean unique) {
         LocalDateTime startDate = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
