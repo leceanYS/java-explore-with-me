@@ -1,46 +1,55 @@
 version: '3.1'
 services:
-  statistic-server:
-    build: ./statistic-service/statistic-server/
-    container_name: statistic-server
+  stats-server:
+    build: ./stat-service/server
+    image: server:latest
+    container_name: ewm_stat_server
     ports:
       - "9090:9090"
+      - "9091:9091"
     depends_on:
-      - statistic-server-db
+      - stats-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://statistic-server-db:5432/ewm-statistic-server-db
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - STAT_DB=stat_db
+      - STAT_DB_HOST=ewm_stat_db
+      - STAT_DB_PORT=5432
+      - STAT_USER=ewm
+      - STAT_PASSWORD=ewm
 
-  statistic-server-db:
-    image: postgres:13.7-alpine
-    container_name: statistic-server-db
+  stats-db:
+    image: postgres:14-alpine
+    container_name: ewm_stat_db
     ports:
-      - "6541:5432"
+      - "6542:5432"
     environment:
-      - POSTGRES_DB=ewm-statistic-server-db
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=stat_db
+      - POSTGRES_USER=ewm
+      - POSTGRES_PASSWORD=ewm
 
-  ewm-main-service:
-    build: ./main-service/
-    container_name: ewm-main-service
+  ewm-service:
+    build: ./main-service
+    image: main-service:latest
+    container_name: ewm_main_service
     ports:
       - "8080:8080"
+      - "8081:8081"
     depends_on:
-      - main-service-db
+      - ewm-db
+      - stats-server
     environment:
-      - STATS_SERVER_URL=http://statistic-server:9090
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-service-db:5432/ewm-main-service-db
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - MAIN_DB=main_db
+      - MAIN_DB_HOST=ewm_main_db
+      - MAIN_DB_PORT=5432
+      - MAIN_USER=ewm
+      - MAIN_PASSWORD=ewm
+      - STAT_SERVER_URL=http://ewm_stat_server:9090
 
-  main-service-db:
-    image: postgres:13.7-alpine
-    container_name: main-service-db
+  ewm-db:
+    image: postgres:14-alpine
+    container_name: ewm_main_db
     ports:
-      - "5444:5432"
+      - "6543:5432"
     environment:
-      - POSTGRES_DB=ewm-main-service-db
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=main_db
+      - POSTGRES_USER=ewm
+      - POSTGRES_PASSWORD=ewm
