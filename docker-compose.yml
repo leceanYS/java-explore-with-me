@@ -1,46 +1,53 @@
 version: '3.1'
 services:
-  statistic-server:
-    build: ./statistic-service/statistic-server/
-    container_name: statistic-server
+  stats-server:
+    build: stats-service
+    container_name: stats-service
     ports:
       - "9090:9090"
     depends_on:
-      - statistic-server-db
+      - stats-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://statistic-server-db:5432/ewm-statistic-server-db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db/stat_db
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
 
-  statistic-server-db:
-    image: postgres:13.7-alpine
-    container_name: statistic-server-db
+
+  stats-db:
+    image: postgres:14-alpine
+    container_name: stats-db
     ports:
       - "6541:5432"
     environment:
-      - POSTGRES_DB=ewm-statistic-server-db
+      - POSTGRES_DB=stat_db
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+      - PGDATA=/var/lib/postgresql/data1
+      - DB_HOST=localhost
+      - DB_PORT=5431
 
-  ewm-main-service:
-    build: ./main-service/
-    container_name: ewm-main-service
+  ewm-db:
+    image: postgres:14-alpine
+    container_name: ewm-db
+    ports:
+      - "6542:5432"
+    environment:
+      - PGDATA=/var/lib/postgresql/data2
+      - POSTGRES_DB=event_db
+      - POSTGRES_USER=root1
+      - POSTGRES_PASSWORD=root1
+      - DB_HOST=localhost
+      - DB_PORT=5432
+
+  main-service:
+    build: ewm-service
+    container_name: event-service
     ports:
       - "8080:8080"
     depends_on:
-      - main-service-db
+      - ewm-db
     environment:
-      - STATS_SERVER_URL=http://statistic-server:9090
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-service-db:5432/ewm-main-service-db
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-
-  main-service-db:
-    image: postgres:13.7-alpine
-    container_name: main-service-db
-    ports:
-      - "5444:5432"
-    environment:
-      - POSTGRES_DB=ewm-main-service-db
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db/event_db
+      - POSTGRES_USER=root1
+      - POSTGRES_PASSWORD=root1
+      - STATS-SERVER.ADDRESS=http://stats-server:9090
