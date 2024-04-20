@@ -28,13 +28,12 @@ public class EventDao {
 
     @Transactional
     public Event createEvent(Event event) {
-        try {
-            EventEntity eventEntity = EventMapper.EVENT_MAPPER.toEventEntity(event);
-            eventRepository.save(eventEntity);
-            return getById(eventEntity.getId());
-        } catch (ConstraintViolationException e) {
-            throw new AlreadyUseException("Error creating event");
+        EventEntity eventEntity = EventMapper.EVENT_MAPPER.toEventEntity(event);
+        if (eventRepository.existsById(eventEntity.getId())) {
+            throw new AlreadyUseException("Событие с таким ID уже существует");
         }
+        eventRepository.save(eventEntity);
+        return getById(eventEntity.getId());
     }
 
 
