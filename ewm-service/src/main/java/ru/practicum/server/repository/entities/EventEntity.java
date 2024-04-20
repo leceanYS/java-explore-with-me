@@ -1,15 +1,17 @@
 package ru.practicum.server.repository.entities;
 
-import lombok.Data;
+import lombok.*;
 import ru.practicum.server.enums.StateEnum;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(schema = "PUBLIC", name = "EVENTS")
 public class EventEntity {
     @Id
@@ -51,4 +53,6 @@ public class EventEntity {
     private List<RequestEntity> requestEntities = new ArrayList<>();
     @Column(name = "views")
     private Long views;
+
+
 }

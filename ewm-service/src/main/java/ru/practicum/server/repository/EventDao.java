@@ -29,15 +29,14 @@ public class EventDao {
     @Transactional
     public Event createEvent(Event event) {
         EventEntity eventEntity = EventMapper.EVENT_MAPPER.toEventEntity(event);
-        try {
-            eventRepository.save(eventEntity);
-            return getById(eventEntity.getId());
-        } catch (ConstraintViolationException e) {
-            throw new AlreadyUseException("Произошла ошибка при создании");
+        if (!eventRepository.existsById(eventEntity.getId())) {
+            return EventMapper.EVENT_MAPPER.toEvent(eventRepository.save(eventEntity));
+        } else {
+            throw new AlreadyUseException("Событие с таким ID уже существует");
         }
     }
 
-    @Transactional
+
     public List<Event> getEventByUserId(Long userId, Pageable pageable) {
         return eventRepository.getEventEntitiesByOwnerId(userId, pageable)
                 .stream()
@@ -91,7 +90,7 @@ public class EventDao {
         }
     }
 
-    @Transactional
+
     public Event getById(Long eventId) {
         Optional<EventEntity> event = eventRepository.findById(eventId);
         if (event.isPresent()) {
@@ -140,7 +139,7 @@ public class EventDao {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+
     public Event getEventByIdAndStatusPublished(Long eventId) {
         Optional<EventEntity> eventEntity = eventRepository.getEventEntityByIdAndState(eventId, StateEnum.PUBLISHED);
         if (eventEntity.isPresent()) {

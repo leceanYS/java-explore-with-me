@@ -1,11 +1,15 @@
 package ru.practicum.server.repository.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(schema = "PUBLIC", name = "CATEGORY")
 public class CategoryEntity {
     @Id
@@ -14,4 +18,6 @@ public class CategoryEntity {
     private Long id;
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
+
+
 }

@@ -1,11 +1,14 @@
 package ru.practicum.server.repository.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(schema = "PUBLIC", name = "USERS")
 public class UserEntity {
     @Id
@@ -16,4 +19,6 @@ public class UserEntity {
     private String name;
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
+
 }

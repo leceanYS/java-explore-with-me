@@ -1,11 +1,14 @@
 package ru.practicum.server.dto.compilationDtos;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateCompilationRequest {
     private List<Long> events;
     private Boolean pinned;

@@ -52,7 +52,7 @@ public class UserDao {
         }
     }
 
-    @Transactional
+
     public User getUserById(long userId) {
         Optional<UserEntity> user = userRepository.findById(userId);
         if (user.isPresent()) {

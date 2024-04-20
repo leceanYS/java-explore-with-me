@@ -1,13 +1,16 @@
 package ru.practicum.server.dto;
 
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @SuperBuilder
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ApiError {
     private List<String> errors;
     private String status;

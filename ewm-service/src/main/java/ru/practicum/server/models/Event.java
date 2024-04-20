@@ -1,6 +1,6 @@
 package ru.practicum.server.models;
 
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import ru.practicum.server.dto.eventDtos.LocationDto;
 import ru.practicum.server.enums.RequestStatusEnum;
@@ -10,7 +10,10 @@ import ru.practicum.server.repository.entities.RequestEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 public class Event {
     private Long id;
@@ -39,4 +42,5 @@ public class Event {
                     .count();
         }
     }
+
 }
