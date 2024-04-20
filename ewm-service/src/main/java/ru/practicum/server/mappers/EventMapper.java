@@ -41,21 +41,6 @@ public interface EventMapper {
     @Mapping(target = "requestEntities", expression = "java(eventEntity.getRequestEntities() == null ? new ArrayList<>() : eventEntity.getRequestEntities())")
     Event fromEventEntity(EventEntity eventEntity);
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "description", source = "description")
-    @Mapping(target = "eventDate", source = "eventDate")
-    @Mapping(target = "participantLimit", source = "participantLimit")
-    @Mapping(target = "requestModeration", source = "requestModeration")
-    @Mapping(target = "location", source = "location")
-    @Mapping(target = "paid", source = "paid")
-    @Mapping(target = "category", source = "category")
-    @Mapping(target = "state", source = "state")
-    @Mapping(target = "createdOn", source = "createdOn")
-    @Mapping(target = "owner", source = "owner")
-    @Mapping(target = "confirmedRequests", source = "confirmedRequests")
-    @Mapping(target = "views", source = "views")
-    Event toEvent(EventEntity eventEntity);
 
     @Mapping(target = "paid", defaultValue = "false", source = "paid")
     @Mapping(target = "participantLimit", defaultValue = "0", source = "participantLimit")
