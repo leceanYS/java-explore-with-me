@@ -1,11 +1,8 @@
 package ru.practicum.server.models;
 
-import lombok.*;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class User {
     private Long id;
     private String name;

@@ -25,5 +25,4 @@ public interface EventRepository extends JpaRepository<EventEntity, Long>, JpaSp
     List<EventEntity> findAllByRequestEntities(@Param("id") Long id,
                                                @Param("datetime") LocalDateTime time,
                                                Pageable pageable);
-
 }

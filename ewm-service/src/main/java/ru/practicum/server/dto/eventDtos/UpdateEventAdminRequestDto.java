@@ -1,17 +1,14 @@
 package ru.practicum.server.dto.eventDtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import ru.practicum.server.enums.AdminStateActionEnum;
 
 import javax.validation.constraints.Future;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class UpdateEventAdminRequestDto {
     @Length(min = 20, max = 2000)
     private String annotation;

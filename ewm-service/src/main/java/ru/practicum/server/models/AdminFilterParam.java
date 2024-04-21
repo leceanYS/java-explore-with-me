@@ -1,6 +1,6 @@
 package ru.practicum.server.models;
 
-import lombok.*;
+import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.domain.Pageable;
 import ru.practicum.server.enums.StateEnum;
@@ -8,10 +8,7 @@ import ru.practicum.server.enums.StateEnum;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @SuperBuilder
 public class AdminFilterParam {
     private List<Long> users;

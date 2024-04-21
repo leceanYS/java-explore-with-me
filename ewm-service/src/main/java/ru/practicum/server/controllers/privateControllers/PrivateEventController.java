@@ -106,4 +106,5 @@ public class PrivateEventController {
         log.info("Has new search curators events");
         return new ResponseEntity<>(eventService.getEventsByCurator(userId, filterParam), HttpStatus.OK);
     }
+
 }

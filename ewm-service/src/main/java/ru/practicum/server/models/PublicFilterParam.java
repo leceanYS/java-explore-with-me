@@ -1,15 +1,12 @@
 package ru.practicum.server.models;
 
-import lombok.*;
+import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @SuperBuilder
 public class PublicFilterParam {
     private String text;
@@ -24,4 +21,5 @@ public class PublicFilterParam {
 
     public enum SortMethod {EVENT_DATE, VIEWS}
 
+    ;
 }

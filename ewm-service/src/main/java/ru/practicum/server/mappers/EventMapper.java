@@ -2,7 +2,6 @@ package ru.practicum.server.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 import ru.practicum.server.dto.categoryDtos.CategoryDto;
 import ru.practicum.server.dto.categoryDtos.NewCategoryDto;
@@ -21,7 +20,7 @@ import ru.practicum.server.repository.entities.RequestEntity;
 
 import java.time.LocalDateTime;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, imports = {LocalDateTime.class, LocationDto.class, StateEnum.class})
+@Mapper(imports = {LocalDateTime.class, LocationDto.class, StateEnum.class})
 public interface EventMapper {
     EventMapper EVENT_MAPPER = Mappers.getMapper(EventMapper.class);
 
@@ -40,7 +39,6 @@ public interface EventMapper {
     @Mapping(target = "location", expression = "java(new LocationDto(eventEntity.getLocationLat(), eventEntity.getLocationLon()))")
     @Mapping(target = "requestEntities", expression = "java(eventEntity.getRequestEntities() == null ? new ArrayList<>() : eventEntity.getRequestEntities())")
     Event fromEventEntity(EventEntity eventEntity);
-
 
     @Mapping(target = "paid", defaultValue = "false", source = "paid")
     @Mapping(target = "participantLimit", defaultValue = "0", source = "participantLimit")

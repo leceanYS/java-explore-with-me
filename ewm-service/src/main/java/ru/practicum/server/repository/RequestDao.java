@@ -17,12 +17,12 @@ import java.util.Optional;
 public class RequestDao {
     private final RequestRepository repository;
 
-
+    @Transactional
     public List<RequestEntity> getByUserId(Long userId) {
         return repository.getAllByUserId_Id(userId);
     }
 
-
+    @Transactional
     public RequestEntity createNewRequest(RequestEntity request) {
         repository.save(request);
         return request;
@@ -41,12 +41,12 @@ public class RequestDao {
         }
     }
 
-
+    @Transactional
     public List<RequestEntity> getRequestsByEvent(Long eventId) {
         return repository.getAllByEventId_Id(eventId);
     }
 
-
+    @Transactional
     public List<RequestEntity> getByIds(Long[] requestIds) {
         return repository.getAllByIdIn(List.of(requestIds));
     }

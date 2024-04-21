@@ -1,12 +1,9 @@
 package ru.practicum.server.dto.requestDtos;
 
-import lombok.*;
+import lombok.Data;
 import ru.practicum.server.enums.EventRequestStatusEnum;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class EventRequestStatusUpdateDto {
     private Long[] requestIds;
     private EventRequestStatusEnum status;

@@ -1,7 +1,7 @@
 package ru.practicum.server.dto.requestDtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import ru.practicum.server.enums.PrivateStateActionEnum;
 
@@ -9,10 +9,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class UpdateEventUserRequestDto {
     @Length(min = 20, max = 2000)
     private String annotation;

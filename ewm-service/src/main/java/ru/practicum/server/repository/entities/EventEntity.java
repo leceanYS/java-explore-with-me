@@ -1,17 +1,15 @@
 package ru.practicum.server.repository.entities;
 
-import lombok.*;
+import lombok.Data;
 import ru.practicum.server.enums.StateEnum;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Table(schema = "PUBLIC", name = "EVENTS")
 public class EventEntity {
     @Id
