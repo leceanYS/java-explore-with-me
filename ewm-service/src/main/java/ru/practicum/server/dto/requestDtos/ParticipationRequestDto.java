@@ -2,12 +2,15 @@ package ru.practicum.server.dto.requestDtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 import ru.practicum.server.enums.RequestStatusEnum;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParticipationRequestDto {
     private Long id;
     private Long requester;

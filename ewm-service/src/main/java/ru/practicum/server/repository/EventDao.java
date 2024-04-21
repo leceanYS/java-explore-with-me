@@ -38,7 +38,6 @@ public class EventDao {
         }
     }
 
-    @Transactional
     public List<Event> getEventByUserId(Long userId, Pageable pageable) {
         return eventRepository.getEventEntitiesByOwnerId(userId, pageable)
                 .stream()
@@ -92,7 +91,6 @@ public class EventDao {
         }
     }
 
-    @Transactional
     public Event getById(Long eventId) {
         Optional<EventEntity> event = eventRepository.findById(eventId);
         if (event.isPresent()) {
@@ -142,7 +140,6 @@ public class EventDao {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public Event getEventByIdAndStatusPublished(Long eventId) {
         Optional<EventEntity> eventEntity = eventRepository.getEventEntityByIdAndState(eventId, StateEnum.PUBLISHED);
         if (eventEntity.isPresent()) {

@@ -1,7 +1,7 @@
 package ru.practicum.server.dto.eventDtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import ru.practicum.server.enums.AdminStateActionEnum;
 

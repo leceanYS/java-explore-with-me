@@ -28,5 +28,5 @@ public class FriendsEntity {
 
     public enum FriendState {PENDING, APPROVED, CANCEL}
 
-    ;
+
 }

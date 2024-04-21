@@ -1,13 +1,16 @@
 package ru.practicum.server.repository.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(schema = "PUBLIC", name = "COMPILATIONS")
 public class CompilationEntity {
     @Id

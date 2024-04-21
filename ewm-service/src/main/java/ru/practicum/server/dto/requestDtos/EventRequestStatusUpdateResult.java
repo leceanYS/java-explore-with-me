@@ -1,12 +1,15 @@
 package ru.practicum.server.dto.requestDtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventRequestStatusUpdateResult {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ParticipationRequestDto> confirmedRequests = new ArrayList<>();

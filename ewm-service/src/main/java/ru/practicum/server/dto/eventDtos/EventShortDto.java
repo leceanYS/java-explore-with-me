@@ -1,13 +1,16 @@
 package ru.practicum.server.dto.eventDtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.*;
 import ru.practicum.server.dto.categoryDtos.CategoryDto;
 import ru.practicum.server.dto.userDtos.UserShortDto;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventShortDto {
     private String annotation;
     private CategoryDto category;

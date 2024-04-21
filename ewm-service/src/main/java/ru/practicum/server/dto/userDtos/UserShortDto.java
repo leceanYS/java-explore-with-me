@@ -1,8 +1,11 @@
 package ru.practicum.server.dto.userDtos;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserShortDto {
     private Long id;
     private String name;
