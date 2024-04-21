@@ -1,6 +1,7 @@
 package ru.practicum.server.repository.entities;
 
 import lombok.*;
+import lombok.EqualsAndHashCode;
 import ru.practicum.server.enums.RequestStatusEnum;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class RequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private UserEntity userId;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,6 +29,4 @@ public class RequestEntity {
     private RequestStatusEnum confirmed;
     @Column(name = "CREATED", nullable = false)
     private LocalDateTime created;
-
-
 }

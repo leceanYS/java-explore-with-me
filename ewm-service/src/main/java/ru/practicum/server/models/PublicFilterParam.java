@@ -24,4 +24,5 @@ public class PublicFilterParam {
 
     public enum SortMethod {EVENT_DATE, VIEWS}
 
+    ;
 }

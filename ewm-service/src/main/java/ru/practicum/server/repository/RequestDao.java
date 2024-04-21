@@ -17,11 +17,9 @@ import java.util.Optional;
 public class RequestDao {
     private final RequestRepository repository;
 
-
     public List<RequestEntity> getByUserId(Long userId) {
         return repository.getAllByUserId_Id(userId);
     }
-
 
     public RequestEntity createNewRequest(RequestEntity request) {
         repository.save(request);
@@ -41,11 +39,9 @@ public class RequestDao {
         }
     }
 
-
     public List<RequestEntity> getRequestsByEvent(Long eventId) {
         return repository.getAllByEventId_Id(eventId);
     }
-
 
     public List<RequestEntity> getByIds(Long[] requestIds) {
         return repository.getAllByIdIn(List.of(requestIds));

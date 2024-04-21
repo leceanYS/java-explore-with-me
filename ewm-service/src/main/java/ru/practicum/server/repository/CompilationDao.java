@@ -12,7 +12,6 @@ import ru.practicum.server.mappers.EventMapper;
 import ru.practicum.server.repository.entities.CompilationEntity;
 import ru.practicum.server.repository.entities.EventEntity;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 @Component
@@ -28,12 +27,14 @@ public class CompilationDao {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("pinned"), pinned);
     }
 
-
     public CompilationEntity getCompilationById(Long id) {
-        return compilationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Compilation with id not found " + id));
+        Optional<CompilationEntity> compilationEntity = compilationRepository.findById(id);
+        if (compilationEntity.isPresent()) {
+            return compilationEntity.get();
+        } else {
+            throw new NotFoundException("Not found");
+        }
     }
-
 
     public List<CompilationEntity> getPageableCompilations(Boolean pinned, Pageable pageable) {
         Specification<CompilationEntity> specification = Specification.where(hasPinned(pinned));

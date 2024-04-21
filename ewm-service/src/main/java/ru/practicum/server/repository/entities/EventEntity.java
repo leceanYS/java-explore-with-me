@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -53,6 +54,4 @@ public class EventEntity {
     private List<RequestEntity> requestEntities = new ArrayList<>();
     @Column(name = "views")
     private Long views;
-
-
 }

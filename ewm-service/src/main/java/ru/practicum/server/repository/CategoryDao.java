@@ -27,7 +27,6 @@ public class CategoryDao {
         return EventMapper.EVENT_MAPPER.fromCategoryEntity(categoryEntity);
     }
 
-
     public Category getCategoryById(Long catId) {
         Optional<CategoryEntity> category = categoryRepository.findById(catId);
         if (category.isPresent()) {

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -27,6 +28,4 @@ public class CompilationEntity {
             inverseJoinColumns = @JoinColumn(name = "EVENT_ID")
     )
     private Set<EventEntity> eventEntities = new HashSet<>();
-
-
 }

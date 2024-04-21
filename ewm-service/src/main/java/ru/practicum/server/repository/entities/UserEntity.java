@@ -19,6 +19,4 @@ public class UserEntity {
     private String name;
     @Column(name = "EMAIL", nullable = false)
     private String email;
-
-
 }

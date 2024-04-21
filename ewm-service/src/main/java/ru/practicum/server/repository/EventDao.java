@@ -11,6 +11,7 @@ import ru.practicum.server.enums.StateEnum;
 import ru.practicum.server.exceptions.*;
 import ru.practicum.server.mappers.EventMapper;
 import ru.practicum.server.models.AdminFilterParam;
+import ru.practicum.server.models.CuratorFilterParam;
 import ru.practicum.server.models.Event;
 import ru.practicum.server.models.PublicFilterParam;
 import ru.practicum.server.repository.entities.EventEntity;
@@ -28,15 +29,14 @@ public class EventDao {
 
     @Transactional
     public Event createEvent(Event event) {
+        EventEntity eventEntity = EventMapper.EVENT_MAPPER.toEventEntity(event);
         try {
-            EventEntity eventEntity = EventMapper.EVENT_MAPPER.toEventEntity(event);
             eventRepository.save(eventEntity);
             return getById(eventEntity.getId());
         } catch (ConstraintViolationException e) {
-            throw new AlreadyUseException("Error creating event");
+            throw new AlreadyUseException("Произошла ошибка при создании");
         }
     }
-
 
     public List<Event> getEventByUserId(Long userId, Pageable pageable) {
         return eventRepository.getEventEntitiesByOwnerId(userId, pageable)
@@ -91,7 +91,6 @@ public class EventDao {
         }
     }
 
-
     public Event getById(Long eventId) {
         Optional<EventEntity> event = eventRepository.findById(eventId);
         if (event.isPresent()) {
@@ -109,6 +108,7 @@ public class EventDao {
                 .stream()
                 .map(EventMapper.EVENT_MAPPER::fromEventEntity).collect(Collectors.toList());
     }
+
 
     @Transactional
     public List<Event> getEventsByPublicFilter(PublicFilterParam publicFilterParam) {
@@ -140,7 +140,6 @@ public class EventDao {
                 .collect(Collectors.toList());
     }
 
-
     public Event getEventByIdAndStatusPublished(Long eventId) {
         Optional<EventEntity> eventEntity = eventRepository.getEventEntityByIdAndState(eventId, StateEnum.PUBLISHED);
         if (eventEntity.isPresent()) {
@@ -151,6 +150,40 @@ public class EventDao {
         } else {
             throw new NotFoundException(String.format("Event with id %s not found", eventId));
         }
+    }
+
+    @Transactional
+    public List<Event> getFriendEvents(Long friendId, Pageable pageable) {
+        List<Event> events = eventRepository.findAllByRequestEntities(friendId, LocalDateTime.now(), pageable)
+                .stream()
+                .map(EventMapper.EVENT_MAPPER::fromEventEntity)
+                .collect(Collectors.toList());
+        return events;
+    }
+
+    @Transactional
+    public List<Event> getAllByCuratorFilter(CuratorFilterParam filterParam) {
+        Sort sort = null;
+        if (filterParam.getSort() == null) {
+            sort = Sort.by("id");
+        } else {
+            switch (filterParam.getSort()) {
+                case VIEWS:
+                    sort = Sort.by("views");
+                    break;
+                case EVENT_DATE:
+                    sort = Sort.by("eventDate");
+                    break;
+            }
+        }
+        Specification<EventEntity> specification = EventSpecificationBuilder
+                .getEventSpecificationByCuratorFilterParam(filterParam);
+        Pageable pageable = PageRequest.of(filterParam.getFrom() / filterParam.getSize(),
+                filterParam.getSize(), sort);
+        return eventRepository.findAll(specification, pageable)
+                .stream()
+                .map(EventMapper.EVENT_MAPPER::fromEventEntity)
+                .collect(Collectors.toList());
     }
 
     private EventEntity setDifferentFields(EventEntity event, Event newEvent, StateEnum stateEnum) {
@@ -190,4 +223,6 @@ public class EventDao {
         }
         return event;
     }
+
+
 }

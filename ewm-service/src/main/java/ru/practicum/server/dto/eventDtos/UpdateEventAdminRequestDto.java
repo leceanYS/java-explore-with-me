@@ -8,10 +8,7 @@ import ru.practicum.server.enums.AdminStateActionEnum;
 import javax.validation.constraints.Future;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class UpdateEventAdminRequestDto {
     @Length(min = 20, max = 2000)
     private String annotation;

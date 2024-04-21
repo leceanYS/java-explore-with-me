@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-
 @Entity
 @Getter
 @Setter
@@ -18,6 +17,4 @@ public class CategoryEntity {
     private Long id;
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
-
-
 }
