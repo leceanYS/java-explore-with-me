@@ -53,6 +53,4 @@ public class EventEntity {
     private List<RequestEntity> requestEntities = new ArrayList<>();
     @Column(name = "views")
     private Long views;
-
-
 }

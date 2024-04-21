@@ -28,6 +28,4 @@ public class RequestEntity {
     private RequestStatusEnum confirmed;
     @Column(name = "CREATED", nullable = false)
     private LocalDateTime created;
-
-
 }
